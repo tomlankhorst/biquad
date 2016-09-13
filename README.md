@@ -5,7 +5,7 @@ This is a simple biquad filter class that enables live digital filtering on real
 
 The file main.cpp contains an application example.
 
-Please refer to [my blog post]() for more details on the subject and application.
+Please refer to [my blog post](https://tomlankhorst.nl/filter-controller-cpp-implementation/) for more details on the subject and application.
 
 License
 -------
