@@ -49,6 +49,10 @@ public:
      * Return zeros of the BiQuad filter
      */
     std::vector< std::complex<double> > zeros( );
+    /**
+     * Is this biquad stable? Checks if all poles lie within the unit-circle
+     */
+    bool stable ();
 
 };
 
@@ -78,6 +82,10 @@ public:
      * Return zeros of the BiQuad filter
      */
     std::vector< std::complex<double> > zeros( );
+    /**
+     * Is this biquad stable? Checks if all poles lie within the unit-circle
+     */
+    bool stable ();
 };
 
 

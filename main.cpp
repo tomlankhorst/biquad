@@ -24,19 +24,22 @@ int main()
     // Find the poles of the filter
     std::cout << "Filter poles" << std::endl;
     std::vector< std::complex<double> > poles = bqc.poles();
-    for( auto pole : poles )
+    for( std::complex<double> pole : poles )
         std::cout << "\t"  << pole << std::endl;
 
     // Find the zeros of the filter
     std::cout << "Filter zeros" << std::endl;
     std::vector< std::complex<double> > zeros = bqc.zeros();
-    for( auto zero : zeros )
+    for( std::complex<double> zero : zeros )
         std::cout << "\t" << zero << std::endl;
+
+    // Is the filter stable?
+    std::cout << "This filter is " << (bqc.stable() ? "stable" : "instable") << std::endl;
 
     // Output the step-response of 20 samples
     std::cout << "Step response 20 samples" << std::endl;
     for( int i = 0; i < 20; i++ )
-        std::cout << bqc.step( 1.0 ) << std::endl;
+        std::cout << "\t" << bqc.step( 1.0 ) << std::endl;
 
     // Done
     return EXIT_SUCCESS;

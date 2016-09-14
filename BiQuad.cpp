@@ -58,6 +58,14 @@ std::vector< std::complex<double> > BiQuad::zeros() {
 
 }
 
+bool BiQuad::stable() {
+    bool stable = true;
+    std::vector< std::complex<double> > ps = poles();
+    for( size_t i = 0; i < ps.size(); i++ )
+        stable = stable & ( std::abs( ps[i] ) < 1 );
+    return stable;
+}
+
 BiQuadChain &BiQuadChain::add(BiQuad *bq) {
     biquads.push_back( bq );
     return *this;
@@ -99,4 +107,11 @@ std::vector< std::complex<double> > BiQuadChain::poles() {
 
 std::vector< std::complex<double> > BiQuadChain::zeros() {
     return poles_zeros( true );
+}
+
+bool BiQuadChain::stable() {
+    bool stable = true;
+    for( size_t i = 0; i < biquads.size(); i++ )
+        stable = stable & biquads[i]->stable();
+    return stable;
 }
