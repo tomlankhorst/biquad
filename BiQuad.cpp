@@ -45,8 +45,17 @@ std::vector< std::complex<double> > BiQuad::poles() {
 }
 
 std::vector< std::complex<double> > BiQuad::zeros() {
+
     std::vector< std::complex<double> > zeros;
+
+    std::complex<double> b2(B[1]*B[1],0);
+    std::complex<double> ds = std::sqrt( b2-4*B[0]*B[2] );
+
+    zeros.push_back( 0.5*(-B[1]+ds)/B[0] );
+    zeros.push_back( 0.5*(-B[1]-ds)/B[0] );
+
     return zeros;
+
 }
 
 BiQuadChain &BiQuadChain::add(BiQuad *bq) {
@@ -67,20 +76,27 @@ double BiQuadChain::step(double x) {
     return x;
 }
 
+std::vector< std::complex<double> > BiQuadChain::poles_zeros( bool zeros ) {
 
-std::vector< std::complex<double> > BiQuadChain::poles() {
-
-    std::vector< std::complex<double> > chain_poles, bq_poles;
+    std::vector< std::complex<double> > chain, bq;
     int i;
     size_t bqs;
 
     bqs = biquads.size();
 
     for( i = 0; i < bqs; i++ ){
-        bq_poles = biquads[ i ]->poles();
-        chain_poles.insert( chain_poles.end(), bq_poles.begin(), bq_poles.end() );
+        bq = ( zeros ) ? biquads[ i ]->zeros() : biquads[ i ]->poles();
+        chain.insert( chain.end(), bq.begin(), bq.end() );
     }
 
-    return chain_poles;
+    return chain;
 
+}
+
+std::vector< std::complex<double> > BiQuadChain::poles() {
+    return poles_zeros( false );
+}
+
+std::vector< std::complex<double> > BiQuadChain::zeros() {
+    return poles_zeros( true );
 }

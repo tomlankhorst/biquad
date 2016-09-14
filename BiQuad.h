@@ -59,6 +59,7 @@ class BiQuadChain {
 
 private:
     std::vector< BiQuad* > biquads;
+    std::vector< std::complex<double> > poles_zeros( bool zeros = false );
 
 public:
     /**
@@ -73,6 +74,10 @@ public:
      * Return poles of the BiQuad filter
      */
     std::vector< std::complex<double> > poles( );
+    /**
+     * Return zeros of the BiQuad filter
+     */
+    std::vector< std::complex<double> > zeros( );
 };
 
 

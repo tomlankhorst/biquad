@@ -22,10 +22,16 @@ int main()
     bqc.add( &bq1 ).add( &bq2 );
 
     // Find the poles of the filter
-    std::vector< std::complex<double> > poles = bqc.poles();
     std::cout << "Filter poles" << std::endl;
-    for( int i = 0; i < poles.size(); i++ )
-        std::cout << poles[i] << std::endl;
+    std::vector< std::complex<double> > poles = bqc.poles();
+    for( auto pole : poles )
+        std::cout << "\t"  << pole << std::endl;
+
+    // Find the zeros of the filter
+    std::cout << "Filter zeros" << std::endl;
+    std::vector< std::complex<double> > zeros = bqc.zeros();
+    for( auto zero : zeros )
+        std::cout << "\t" << zero << std::endl;
 
     // Output the step-response of 20 samples
     std::cout << "Step response 20 samples" << std::endl;
