@@ -24,14 +24,14 @@ int main()
     // Find the poles of the filter
     std::cout << "Filter poles" << std::endl;
     std::vector< std::complex<double> > poles = bqc.poles();
-    for( std::complex<double> pole : poles )
-        std::cout << "\t"  << pole << std::endl;
+    for( size_t i = 0; i < poles.size(); i++ )
+        std::cout << "\t"  << poles[i] << std::endl;
 
     // Find the zeros of the filter
     std::cout << "Filter zeros" << std::endl;
     std::vector< std::complex<double> > zeros = bqc.zeros();
-    for( std::complex<double> zero : zeros )
-        std::cout << "\t" << zero << std::endl;
+    for( size_t i = 0; i < poles.size(); i++ )
+        std::cout << "\t" << zeros[i] << std::endl;
 
     // Is the filter stable?
     std::cout << "This filter is " << (bqc.stable() ? "stable" : "instable") << std::endl;
