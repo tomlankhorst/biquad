@@ -9,17 +9,17 @@
 #include <complex>
 #include "BiQuad.h"
 
+// Example: 4th order Butterworth LP (w_c = 0.1*f_nyquist)
+BiQuad bq1( 4.16599e-04, 8.33198e-04, 4.16599e-04, -1.47967e+00, 5.55822e-01 );
+BiQuad bq2( 1.00000e+00, 2.00000e+00, 1.00000e+00, -1.70096e+00, 7.88500e-01 );
+
 BiQuadChain bqc;
-BiQuad pidf;
 
 int main()
 {
 
-    // Create a biquad filter based on PIDF parameters
-    pidf.PIDF(1,1,1,1,1);
-
     // Add the biquads to the chain
-    bqc.add( &pidf );
+    bqc.add( &bq1 ).add( &bq2 );
 
     // Find the poles of the filter
     std::cout << "Filter poles" << std::endl;
