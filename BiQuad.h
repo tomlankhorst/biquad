@@ -70,41 +70,77 @@ private:
     void set( double b0, double b1, double b2, double a1, double a2 );
 
 public:
+
     /**
      * Initialize a unity TF biquad
+     * @return BiQuad instance
      */
     BiQuad( );
+
     /**
      * Initialize a normalized biquad filter
+     * @param b0
+     * @param b1
+     * @param b2
+     * @param a1
+     * @param a2
+     * @return BiQuad instance
      */
     BiQuad( double b0, double b1, double b2, double a1, double a2 );
+
     /**
      * Initialize a biquad filter with all six coefficients
+     * @param b0
+     * @param b1
+     * @param b2
+     * @param a0
+     * @param a1
+     * @param a2
+     * @return BiQuad instance
      */
     BiQuad( double b0, double b1, double b2, double a0, double a1, double a2 );
+
     /**
-     * Initialize a PIFD biquad based on Tustin-approx (trapezoidal). of the continous time version
+     * Initialize a PIFD biquad.
+     * Based on Tustin-approx (trapezoidal). of the continous time version
+     * @param Kp
+     * @param Ki
+     * @param Kd
+     * @param N
+     * @param Ts
      */
     void PIDF( double Kp, double Ki, double Kd, double N, double Ts  );
+
     /**
      * Execute one digital timestep and return the result...
+     * @param x input of the filer
+     * @return output of the filter
      */
     double step( double x );
+
     /**
      * Return poles of the BiQuad filter
+     * @return vector of std::complex poles
      */
     std::vector< std::complex<double> > poles( );
+
     /**
      * Return zeros of the BiQuad filter
+     * @return vector of std::complex zeros
      */
     std::vector< std::complex<double> > zeros( );
+
     /**
-     * Is this biquad stable? Checks if all poles lie within the unit-circle
+     * Is this biquad stable?
+     * Checks if all poles lie within the unit-circle
+     * @return boolean whether the filter is stable or not
      */
     bool stable ();
+
     /**
      * Determines if the state variables are reset to zero on gain change.
      * Can be used for changing gain parameters on the fly.
+     * @param v Value of the reset boolean
      */
     void setResetStateOnGainChange( bool v );
 
@@ -120,22 +156,39 @@ private:
     std::vector< std::complex<double> > poles_zeros( bool zeros = false );
 
 public:
-    /** Add a BiQuad pointer to the list: bqc.add(&bq);
+
+    /**
+     * Add a BiQuad pointer to the list: bqc.add(&bq);
+     * @param bq Pointer to BiQuad instance
+     * @return Pointer to BiQuadChain
      */
     BiQuadChain &add( BiQuad *bq );
-    /** Execute a digital time step cascaded through all bq's
+
+    /**
+     * Execute a digital time step cascaded through all bq's
+     * @param x Input of the filter chain
+     * @return Output of the chain
      */
     double step(double x);
-    /** Return poles of the BiQuad filter
+
+    /**
+     * Return poles of the BiQuad filter
+     * @return vector of std::complex poles
      */
     std::vector< std::complex<double> > poles( );
-    /** Return zeros of the BiQuad filter
+
+    /**
+     * Return zeros of the BiQuad filter
+     * @return vector of std::complex zeros
      */
     std::vector< std::complex<double> > zeros( );
-    /** Is this biquad stable? Checks if all poles lie within the unit-circle
+
+    /**
+     * Is this biquad-chain stable?
+     * Checks if all poles lie within the unit-circle
+     * @return boolean whether the chain is stable or not
      */
     bool stable ();
 };
-
 
 #endif //BIQUAD_BIQUAD_H
