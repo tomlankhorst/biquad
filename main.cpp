@@ -9,12 +9,13 @@
 #include <complex>
 #include "BiQuad.h"
 
+BiQuadChain bqc;
+BiQuad pidf;
+
 int main()
 {
 
-    BiQuadChain bqc;
-
-    BiQuad pidf;
+    // Create a biquad filter based on PIDF parameters
     pidf.PIDF(1,1,1,1,1);
 
     // Add the biquads to the chain

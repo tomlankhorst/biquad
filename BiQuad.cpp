@@ -1,15 +1,17 @@
 #include "BiQuad.h"
 
 BiQuad::BiQuad() {
+    resetStateOnGainChange = true;
     set( 1.0, 0.0, 0.0, 0.0, 0.0 );
 }
 
 BiQuad::BiQuad(double b0, double b1, double b2, double a1, double a2) {
+    resetStateOnGainChange = true;
     set( b0, b1, b2, a1, a2 );
 }
 
 BiQuad::BiQuad(double b0, double b1, double b2, double a0, double a1, double a2) {
-    // Do the normalization...
+    resetStateOnGainChange = true;
     set( b0/a0, b1/a0, b2/a0, a1/a0, a2/a0 );
 }
 
