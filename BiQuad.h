@@ -24,11 +24,23 @@
 class BiQuad {
 
 private:
+
     double B[3];
     double A[2];
     double wz[2];
 
+    bool resetStateOnGainChange = true;
+
+    /**
+     * Sets the gain parameters
+     */
+    void set( double b0, double b1, double b2, double a1, double a2 );
+
 public:
+    /**
+     * Initialize a unity TF biquad
+     */
+    BiQuad( );
     /**
      * Initialize a normalized biquad filter
      */
@@ -37,6 +49,10 @@ public:
      * Initialize a biquad filter with all six coefficients
      */
     BiQuad( double b0, double b1, double b2, double a0, double a1, double a2 );
+    /**
+     * Initialize a PIFD biquad based on Tustin-approx (trapezoidal). of the continous time version
+     */
+    void PIDF( double Kp, double Ki, double Kd, double N, double Ts  );
     /**
      * Execute one digital timestep and return the result...
      */
@@ -53,6 +69,11 @@ public:
      * Is this biquad stable? Checks if all poles lie within the unit-circle
      */
     bool stable ();
+    /**
+     * Determines if the state variables are reset to zero on gain change.
+     * Can be used for changing gain parameters on the fly.
+     */
+    void setResetStateOnGainChange( bool v );
 
 };
 

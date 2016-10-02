@@ -1,17 +1,43 @@
 #include "BiQuad.h"
 
+BiQuad::BiQuad() {
+    set( 1.0, 0.0, 0.0, 0.0, 0.0 );
+}
+
 BiQuad::BiQuad(double b0, double b1, double b2, double a1, double a2) {
-
-    B[0] = b0; B[1] = b1; B[2] = b2;
-    A[0] = a1; A[1] = a2;
-
-    wz[0] = 0; wz[1] = 0;
-
+    set( b0, b1, b2, a1, a2 );
 }
 
 BiQuad::BiQuad(double b0, double b1, double b2, double a0, double a1, double a2) {
     // Do the normalization...
-    BiQuad(b0/a0,b1/a0,b2/a0,a1/a0,a2/a0);
+    set( b0/a0, b1/a0, b2/a0, a1/a0, a2/a0 );
+}
+
+void BiQuad::PIDF( double Kp, double Ki, double Kd, double N, double Ts  ) {
+
+    double b0, b1, b2, bd, a1, a2;
+
+    a1 = -4.0/(N*Ts+2.0);
+    a2 = -(N*Ts-2.0)/(N*Ts+2.0);
+
+    bd = ( N*Ts+2.0 );
+
+    b0 = ( 4.0*Kp + 4.0*Kd*N + 2.0*Ki*Ts + 2.0*Kp*N*Ts + Ki*N*Ts*Ts )/(2.0*bd);
+    b1 = ( Ki*N*Ts*Ts - 4.0*Kp - 4.0*Kd*N )/bd;
+    b2 = ( 4.0*Kp + 4.0*Kd*N - 2*Ki*Ts - 2*Kp*N*Ts + Ki*N*Ts*Ts )/(2.0*bd);
+
+    set( b0, b1, b2, a1, a2 );
+
+};
+
+void BiQuad::set(double b0, double b1, double b2, double a1, double a2) {
+
+    B[0] = b0; B[1] = b1; B[2] = b2;
+    A[0] = a1; A[1] = a2;
+
+    if( resetStateOnGainChange )
+        wz[0] = 0; wz[1] = 0;
+
 }
 
 double BiQuad::step(double x) {
@@ -64,6 +90,10 @@ bool BiQuad::stable() {
     for( size_t i = 0; i < ps.size(); i++ )
         stable = stable & ( std::abs( ps[i] ) < 1 );
     return stable;
+}
+
+void BiQuad::setResetStateOnGainChange( bool v ){
+    resetStateOnGainChange = v;
 }
 
 BiQuadChain &BiQuadChain::add(BiQuad *bq) {
