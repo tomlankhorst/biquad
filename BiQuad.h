@@ -4,6 +4,8 @@
 #include <vector>
 #include <complex>
 
+class BiQuadChain;
+
 /** BiQuad class implements a single filter
  *
  * author: T.J.W. Lankhorst <t.j.w.lankhorst@student.utwente.nl>
@@ -105,12 +107,16 @@ public:
 
     /**
      * Initialize a PIDF biquad.
-     * Based on Tustin-approx (trapezoidal). of the continous time version
-     * @param Kp
-     * @param Ki
-     * @param Kd
-     * @param N
-     * @param Ts
+     * Based on Tustin-approx (trapezoidal) of the continous time version.
+     * Behaviour equivalent to the PID controller created with the following MATLAB expression:
+     *
+     * C = pid( Kp, Ki, Kd, 1/N, Ts, 'IFormula', 'Trapezoidal', 'DFormula', 'Trapezoidal' );
+     *
+     * @param Kp    Proportional gain
+     * @param Ki    Integral gain
+     * @param Kd    Derivative gain
+     * @param N     Filter coefficient ( N = 1/Tf )
+     * @param Ts    Timestep
      */
     void PIDF( double Kp, double Ki, double Kd, double N, double Ts  );
 
@@ -192,6 +198,22 @@ public:
      * @return boolean whether the chain is stable or not
      */
     bool stable ();
+
+    /**
+     * Appends a BiQuad to the chain
+     * Shorthand for .add(&bq)
+     * @param bq BiQuad
+     * @return Pointer to BiQuadChain
+     */
+    BiQuadChain &operator*( BiQuad& bq );
+
 };
+
+/**
+ * Multiply two BiQuads
+ * ... which in fact means appending them into a BiQuadChain
+ * @return BiQuadChain of the two BiQuads
+ */
+BiQuadChain operator*( BiQuad&, BiQuad& );
 
 #endif //BIQUAD_BIQUAD_H

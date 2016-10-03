@@ -103,6 +103,12 @@ BiQuadChain &BiQuadChain::add(BiQuad *bq) {
     return *this;
 }
 
+BiQuadChain operator*( BiQuad &bq1, BiQuad &bq2 ) {
+    BiQuadChain bqc;
+    bqc.add( &bq1 ).add( &bq2 );
+    return bqc;
+}
+
 double BiQuadChain::step(double x) {
 
     int i;
@@ -146,4 +152,9 @@ bool BiQuadChain::stable() {
     for( size_t i = 0; i < biquads.size(); i++ )
         stable = stable & biquads[i]->stable();
     return stable;
+}
+
+BiQuadChain& BiQuadChain::operator*( BiQuad& bq ) {
+    add( &bq );
+    return *this;
 }
