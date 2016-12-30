@@ -111,7 +111,7 @@ BiQuadChain operator*( BiQuad &bq1, BiQuad &bq2 ) {
 
 double BiQuadChain::step(double x) {
 
-    int i;
+    size_t i;
     size_t bqs;
 
     bqs = biquads.size();
@@ -125,7 +125,7 @@ double BiQuadChain::step(double x) {
 std::vector< std::complex<double> > BiQuadChain::poles_zeros( bool zeros ) {
 
     std::vector< std::complex<double> > chain, bq;
-    int i;
+    size_t i;
     size_t bqs;
 
     bqs = biquads.size();
