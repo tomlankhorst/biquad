@@ -46,15 +46,12 @@ void BiQuad::set(double b0, double b1, double b2, double a1, double a2) {
 
 double BiQuad::step(double x) {
 
-    double y,w;
+    double y;
 
-    /* Direct form II */
-    w =      x - A[0]*wz[0] - A[1]*wz[1];
-    y = B[0]*w + B[1]*wz[0] + B[2]*wz[1];
-
-    /* Shift */
-    wz[1] = wz[0];
-    wz[0] = w;
+    /* Direct form II transposed */
+    y = B[0] * x + wz[0];
+    wz[0] = B[1] * x - A[0] * y + wz[1];
+    wz[1] = B[2] * x - A[1] * y;
 
     return y;
 
