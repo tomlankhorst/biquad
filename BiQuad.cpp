@@ -37,8 +37,10 @@ void BiQuad::set(double b0, double b1, double b2, double a1, double a2) {
     B[0] = b0; B[1] = b1; B[2] = b2;
     A[0] = a1; A[1] = a2;
 
-    if( resetStateOnGainChange )
-        wz[0] = 0; wz[1] = 0;
+    if( resetStateOnGainChange ) {
+        wz[0] = 0; 
+        wz[1] = 0; 
+    }
 
 }
 
