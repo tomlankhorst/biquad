@@ -3,7 +3,7 @@ Biquad Filter Class
 
 This is a simple biquad filter class that enables live digital filtering on real-time devices and microcontrollers or signal processing on all other computer devices.
 
-[Also check out tomlankhorst/control](https://github.com/tomlankhorst/control)
+Also check out [tomlankhorst/control](https://github.com/tomlankhorst/control)!
 
 The file main.cpp contains an application example.
 
